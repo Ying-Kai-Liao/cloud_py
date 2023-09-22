@@ -30,7 +30,5 @@ def hello3(name, id):
 def hello4(name, id):
     return 'Hello, ' + name + ', your post id: ' + str(id)
 
-@app.route('/')
-
 if __name__ == '__main__':
     app.run()
