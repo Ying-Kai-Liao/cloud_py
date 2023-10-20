@@ -6,9 +6,20 @@ app = Flask(__name__)
 
 
 @app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/test')
 def hello():
     return 'Hello, World!'
+
+@app.route('/home')
+def home():
+    return '<h1>Home Page</h1>'
+
+@app.route('/about')
+def about():
+    return '<h1>About Page</h1>'
 
 @app.route('/readme')
 def readme():
