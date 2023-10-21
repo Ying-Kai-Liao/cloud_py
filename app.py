@@ -1,8 +1,39 @@
 import os
+import logging
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from datetime import datetime
+# import psycopg2
+
+# connection = psycopg2.connect(
+#     dbname=os.getenv('POSTGRES_DATABASE'),
+#     user=os.getenv('POSTGRES_USER'),
+#     password=os.getenv('POSTGRES_PASSWORD'),
+#     host=os.getenv('POSTGRES_HOST'),
+#     port=5432
+# )
+
+# cursor = connection.cursor()
+
+# # Example: Create a table
+# cursor.execute("""
+#     CREATE TABLE IF NOT EXISTS blog_post (
+#         id SERIAL PRIMARY KEY,
+#         title VARCHAR(255),
+#         content TEXT,
+#         author VARCHAR(255),
+#         date_posted TIMESTAMP
+#     )
+# """)
+
+# # Commit changes and close
+# connection.commit()
+# cursor.close()
+# connection.close()
+
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 app = Flask(__name__)
 db_url = os.getenv('POSTGRES_URL')
