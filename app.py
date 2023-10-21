@@ -13,6 +13,7 @@ def index():
 def posts():
     
     if request.method == 'POST':
+        print ('hi_there')
         post_title = request.form['title']
         post_author = request.form['author']
         post_content = request.form['content']
