@@ -26,6 +26,7 @@ class BlogPost(db.Model):
         return 'Blog post ' + str(self.id)
     
 def init_db():
+    print ('initiated')
     with app.app_context():
         db.create_all()
         
