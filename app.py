@@ -1,4 +1,4 @@
-
+import os
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -76,7 +76,7 @@ def hello3(name, id):
 def hello4(name, id):
     return 'Hello, ' + name + ', your post id: ' + str(id)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog_post.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
 
 class BlogPost(db.Model):
