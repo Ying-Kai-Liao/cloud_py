@@ -60,6 +60,7 @@ def init_db():
 def test_connection():
     try:
         # Query the database, this will throw an exception if the database is not accessible
+        init_db()
         result = db.session.execute(text("SELECT 1"))
         return 'Database connection successful', 200
     except Exception as e:
