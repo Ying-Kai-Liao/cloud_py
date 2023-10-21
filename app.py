@@ -4,33 +4,6 @@ from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from datetime import datetime
-# import psycopg2
-
-# connection = psycopg2.connect(
-#     dbname=os.getenv('POSTGRES_DATABASE'),
-#     user=os.getenv('POSTGRES_USER'),
-#     password=os.getenv('POSTGRES_PASSWORD'),
-#     host=os.getenv('POSTGRES_HOST'),
-#     port=5432
-# )
-
-# cursor = connection.cursor()
-
-# # Example: Create a table
-# cursor.execute("""
-#     CREATE TABLE IF NOT EXISTS blog_post (
-#         id SERIAL PRIMARY KEY,
-#         title VARCHAR(255),
-#         content TEXT,
-#         author VARCHAR(255),
-#         date_posted TIMESTAMP
-#     )
-# """)
-
-# # Commit changes and close
-# connection.commit()
-# cursor.close()
-# connection.close()
 
 logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
@@ -60,7 +33,6 @@ def init_db():
 def test_connection():
     try:
         # Query the database, this will throw an exception if the database is not accessible
-        init_db()
         result = db.session.execute(text("SELECT 1"))
         return 'Database connection successful', 200
     except Exception as e:
@@ -139,7 +111,8 @@ def hello3(name, id):
 @app.route('/home/<string:name>/<int:id>')
 def hello4(name, id):
     return 'Hello, ' + name + ', your post id: ' + str(id)
+
+init_db()
     
 if __name__ == '__main__':
-    init_db()
     app.run()
