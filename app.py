@@ -76,7 +76,8 @@ def hello3(name, id):
 def hello4(name, id):
     return 'Hello, ' + name + ', your post id: ' + str(id)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL_NON_POOLING')
+print(os.environ.get('POSTGRES_URL_NON_POOLING'))
 db = SQLAlchemy(app)
 
 class BlogPost(db.Model):
