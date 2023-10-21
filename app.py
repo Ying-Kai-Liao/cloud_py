@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 from datetime import datetime
 
 app = Flask(__name__)
@@ -28,7 +29,7 @@ def init_db():
 def test_connection():
     try:
         # Query the database, this will throw an exception if the database is not accessible
-        result = db.session.execute("SELECT 1")
+        result = db.session.execute(text("SELECT 1"))
         return 'Database connection successful', 200
     except Exception as e:
         # Log the exception to your logs (consider using app.logger.error)
