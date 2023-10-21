@@ -1,6 +1,8 @@
 
 from flask import Flask
 from flask import render_template
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 # Data of Posts
 all_posts = [
@@ -21,7 +23,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/posts')
+@app.route('/posts', methods=['GET', 'POST'])
 def posts():
     return render_template("posts.html", posts = all_posts)
 
@@ -57,5 +59,18 @@ def hello3(name, id):
 def hello4(name, id):
     return 'Hello, ' + name + ', your post id: ' + str(id)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog_post.db'
+db = SQLAlchemy(app)
+
+class BlogPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text,nullable=False)
+    author = db.Column(db.String(20), nullable=False, default='N/A')
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return 'Blog post ' + str(self.id)
+    
 if __name__ == '__main__':
     app.run()
