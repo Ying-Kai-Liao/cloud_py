@@ -4,11 +4,32 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
+db_url = os.getenv('POSTGRES_URL_NON_POOLING')
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace('postgres://', 'postgresql://', 1)
 
+db = SQLAlchemy(app)
+
+# DataBase Config
+class BlogPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text,nullable=False)
+    author = db.Column(db.String(20), nullable=False, default='N/A')
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return 'Blog post ' + str(self.id)
+    
+def init_db():
+    with app.app_context():
+        db.create_all()
+
+# Default Route
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# POSTS
 @app.route('/posts', methods=['GET', 'POST'])
 def posts():
     
@@ -46,12 +67,7 @@ def edit(id):
     else:
         return render_template('edit.html', post=post)
 
-
-
-@app.route('/test')
-def hello():
-    return 'Hello, World!'
-
+# OTHERS
 @app.route('/home')
 def home():
     return '<h1>Home Page</h1>'
@@ -64,6 +80,11 @@ def about():
 def readme():
     return "This is a read me page. Please read me first!!"
 
+# TESTS
+@app.route('/test')
+def hello():
+    return 'Hello, World!'
+
 @app.route('/home/posts/<int:id>')
 def hello2(id):
     return 'Hello, ' + str(id)
@@ -75,21 +96,7 @@ def hello3(name, id):
 @app.route('/home/<string:name>/<int:id>')
 def hello4(name, id):
     return 'Hello, ' + name + ', your post id: ' + str(id)
-
-DATABASE_URL = os.getenv('POSTGRES_URL_NON_POOLING')
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
-print(os.getenv('POSTGRES_URL_NON_POOLING'))
-db = SQLAlchemy(app)
-
-class BlogPost(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text,nullable=False)
-    author = db.Column(db.String(20), nullable=False, default='N/A')
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    
-    def __repr__(self):
-        return 'Blog post ' + str(self.id)
     
 if __name__ == '__main__':
+    init_db()
     app.run()
