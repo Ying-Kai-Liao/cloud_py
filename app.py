@@ -28,7 +28,7 @@ def init_db():
 def test_connection():
     try:
         # Query the database, this will throw an exception if the database is not accessible
-        result = db.engine.execute("SELECT 1")
+        result = db.session.execute("SELECT 1")
         return 'Database connection successful', 200
     except Exception as e:
         # Log the exception to your logs (consider using app.logger.error)
