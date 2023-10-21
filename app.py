@@ -76,7 +76,8 @@ def hello3(name, id):
 def hello4(name, id):
     return 'Hello, ' + name + ', your post id: ' + str(id)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL_NON_POOLING')
+DATABASE_URL = os.getenv('POSTGRES_URL_NON_POOLING')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
 print(os.getenv('POSTGRES_URL_NON_POOLING'))
 db = SQLAlchemy(app)
 
