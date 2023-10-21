@@ -53,7 +53,7 @@ class BlogPost(db.Model):
         return 'Blog post ' + str(self.id)
     
 def init_db():
-    with app.app_context().push():
+    with app.app_context():
         db.create_all()
         
 @app.route('/test_connection')
