@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-db_url = os.getenv('POSTGRES_URL_NON_POOLING')
+db_url = os.getenv('POSTGRES_URL')
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace('postgres://', 'postgresql://', 1)
 
 db = SQLAlchemy(app)
