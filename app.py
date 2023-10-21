@@ -23,6 +23,16 @@ class BlogPost(db.Model):
 def init_db():
     with app.app_context():
         db.create_all()
+        
+@app.route('/test_connection')
+def test_connection():
+    try:
+        # Query the database, this will throw an exception if the database is not accessible
+        result = db.engine.execute("SELECT 1")
+        return 'Database connection successful', 200
+    except Exception as e:
+        # Log the exception to your logs (consider using app.logger.error)
+        return str(e), 500
 
 # Default Route
 @app.route('/')
